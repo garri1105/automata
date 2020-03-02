@@ -1,0 +1,190 @@
+# class DFA:
+#     def __init__(self):
+#         self.states = ['a', 'b']
+#         self.alphabet = ['0', '1']
+#         self.initial_state = 'a'
+#         self.end_states = ['b']
+#         self.transition_table = {'a': {'0': 'b', '1': 'a'}, 'b': {'0': 'b', '1': 'a'}}
+#
+#     def run(self, inp):
+#         current_state = self.initial_state
+#
+#         print(f'Initial State: {current_state}')
+#
+#         for letter in inp:
+#             current_state = self.transition_table[current_state][letter]
+#             print(f'State after input {letter}: {current_state}')
+#
+#         print(f'\nFinal State: {current_state}')
+#         print(f'End States: {self.end_states}')
+#         return current_state in self.end_states
+#
+#
+# dfa = DFA()
+#
+# print(f'Final State in End states: {dfa.run("1001")}')
+
+# ----------------------------------------------------------------
+
+# import json
+#
+#
+# class DFA:
+#     def __init__(self, states, alphabet, initial_state, end_states, transition_table):
+#         self.states = states
+#         self.alphabet = alphabet
+#         self.initial_state = initial_state
+#         self.end_states = end_states
+#         self.transition_table = transition_table
+#
+#     def to_json(self):
+#         return json.dumps(self.__dict__)
+#
+#     @classmethod
+#     def from_json(cls, json_str):
+#         json_dict = json.loads(json_str)
+#         return cls(**json_dict)
+#
+#     def run(self, inp):
+#         current_state = self.initial_state
+#
+#         print(f'\n-------------------\nInitial State: {current_state}')
+#
+#         for letter in inp:
+#             current_state = self.transition_table[current_state][letter]
+#             print(f'State after input {letter}: {current_state}')
+#
+#         print(f'\nFinal State: {current_state}')
+#         print(f'End States: {self.end_states}')
+#         return current_state in self.end_states
+#
+#
+# with open('basic_DFA.json', 'r') as f:
+#     dfa = DFA.from_json(f.read())
+#
+# print(f'Final State in End states: {dfa.run("1001")}')
+#
+#
+# with open('ex1.json', 'r') as f:
+#     dfa = DFA.from_json(f.read())
+#
+# print(f'Final State in End states: {dfa.run("1111")}')
+
+# ----------------------------------------------------------------
+
+import json
+import pprint
+
+
+class DFA:
+    def __init__(self, states, alphabet, initial_state, end_states, transition_table):
+        self.states = states
+        self.alphabet = alphabet
+        self.initial_state = initial_state
+        self.end_states = end_states
+        self.transition_table = transition_table
+
+    def to_json(self):
+        return json.dumps(self.__dict__, indent=2)
+
+    @classmethod
+    def from_json(cls, json_str):
+        json_dict = json.loads(json_str)
+        return cls(**json_dict)
+
+    def pretty_print(self):
+        print("---------------------\nThis DFA has %s states" % len(self.states))
+        print("States:", self.states)
+        print("Alphabet:", self.alphabet)
+        print("Starting state:", self.initial_state)
+        print("Accepting states:", self.end_states)
+        print("Transition table:")
+        pprint.pprint(self.transition_table, indent=2)
+        print()
+
+    @property
+    def states(self):
+        return self._states
+
+    @states.setter
+    def states(self, states):
+        if not states:
+            raise ValueError(f'states can\'t be empty. A DFA\'s number of states must be equal or greater than 1.')
+
+        self._states = set(states)
+
+    @property
+    def alphabet(self):
+        return self._alphabet
+
+    @alphabet.setter
+    def alphabet(self, alphabet):
+        if not alphabet:
+            raise ValueError(f'alphabet can\'t be empty. A DFA\'s number of possible inputs must be equal or greater than 1.')
+
+        self._alphabet = set(alphabet)
+
+    @property
+    def initial_state(self):
+        return self._initial_state
+
+    @initial_state.setter
+    def initial_state(self, initial_state):
+        if not initial_state:
+            raise ValueError(f'initial_state can\'t be empty')
+
+        if initial_state not in self._states:
+            raise ValueError(f'initial_state \'{initial_state}\' is not in list of possible states')
+
+        self._initial_state = initial_state
+
+    @property
+    def end_states(self):
+        return self._end_states
+
+    @end_states.setter
+    def end_states(self, end_states):
+        for state in end_states:
+            if state not in self._states:
+                raise ValueError(
+                    f'end state {state} is not in list of possible states. All end_states must be in list of states'
+                )
+
+        self._end_states = end_states
+
+    @property
+    def transition_table(self):
+        return self._transition_table
+
+    @transition_table.setter
+    def transition_table(self, transition_table):
+        if not transition_table:
+            raise ValueError('transition_table can\'t be empty')
+
+        if not self._states:
+            raise ValueError('states can\'t be empty')
+
+        if len(self._states) != len(transition_table.keys()):
+            raise ValueError('transition_table keys must contain all possible states')
+
+        for state in self._states:
+            try:
+                transition_table[state]
+            except KeyError as e:
+                raise ValueError(f'transition_table must contain state {e}')
+
+        self._transition_table = transition_table
+
+    def run(self, inp):
+        current_state = self.initial_state
+
+        # print(f'\n-------------------\nStates: {self.states}')
+        # print(f'Initial State: {current_state}\n')
+
+        for letter in inp:
+            current_state = self.transition_table[current_state][letter]
+            # print(f'State after input {letter}: {current_state}')
+
+        # print(f'\nFinal State: {current_state}')
+        # print(f'End States: {self.end_states}')
+        return current_state in self.end_states

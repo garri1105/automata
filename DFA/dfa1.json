@@ -1,0 +1,16 @@
+{
+  "states": ["a", "b"],
+  "alphabet": ["0", "1"],
+  "initial_state": "a",
+  "end_states": ["a"],
+  "transition_table": {
+    "a": {
+      "0": "b",
+      "1": "a"
+    },
+    "b": {
+      "0": "a",
+      "1": "b"
+    }
+  }
+}
