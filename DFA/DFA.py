@@ -1,77 +1,3 @@
-# class DFA:
-#     def __init__(self):
-#         self.states = ['a', 'b']
-#         self.alphabet = ['0', '1']
-#         self.initial_state = 'a'
-#         self.end_states = ['b']
-#         self.transition_table = {'a': {'0': 'b', '1': 'a'}, 'b': {'0': 'b', '1': 'a'}}
-#
-#     def run(self, inp):
-#         current_state = self.initial_state
-#
-#         print(f'Initial State: {current_state}')
-#
-#         for letter in inp:
-#             current_state = self.transition_table[current_state][letter]
-#             print(f'State after input {letter}: {current_state}')
-#
-#         print(f'\nFinal State: {current_state}')
-#         print(f'End States: {self.end_states}')
-#         return current_state in self.end_states
-#
-#
-# dfa = DFA()
-#
-# print(f'Final State in End states: {dfa.run("1001")}')
-
-# ----------------------------------------------------------------
-
-# import json
-#
-#
-# class DFA:
-#     def __init__(self, states, alphabet, initial_state, end_states, transition_table):
-#         self.states = states
-#         self.alphabet = alphabet
-#         self.initial_state = initial_state
-#         self.end_states = end_states
-#         self.transition_table = transition_table
-#
-#     def to_json(self):
-#         return json.dumps(self.__dict__)
-#
-#     @classmethod
-#     def from_json(cls, json_str):
-#         json_dict = json.loads(json_str)
-#         return cls(**json_dict)
-#
-#     def run(self, inp):
-#         current_state = self.initial_state
-#
-#         print(f'\n-------------------\nInitial State: {current_state}')
-#
-#         for letter in inp:
-#             current_state = self.transition_table[current_state][letter]
-#             print(f'State after input {letter}: {current_state}')
-#
-#         print(f'\nFinal State: {current_state}')
-#         print(f'End States: {self.end_states}')
-#         return current_state in self.end_states
-#
-#
-# with open('basic_DFA.json', 'r') as f:
-#     dfa = DFA.from_json(f.read())
-#
-# print(f'Final State in End states: {dfa.run("1001")}')
-#
-#
-# with open('ex1.json', 'r') as f:
-#     dfa = DFA.from_json(f.read())
-#
-# print(f'Final State in End states: {dfa.run("1111")}')
-
-# ----------------------------------------------------------------
-
 import json
 import pprint
 
@@ -133,10 +59,10 @@ class DFA:
         if not initial_state:
             raise ValueError(f'initial_state can\'t be empty')
 
-        if initial_state not in self._states:
+        if tuple(initial_state) not in self._states:
             raise ValueError(f'initial_state \'{initial_state}\' is not in list of possible states')
 
-        self._initial_state = initial_state
+        self._initial_state = tuple(initial_state)
 
     @property
     def end_states(self):

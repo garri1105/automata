@@ -1,4 +1,5 @@
 import json
+import pprint
 
 # FIXME Reject strings when there aren't available transitions.
 
@@ -18,6 +19,16 @@ class NFA:
     def from_json(cls, json_str):
         json_dict = json.loads(json_str)
         return cls(**json_dict)
+
+    def pretty_print(self):
+        print("---------------------\nThis NFA has %s states" % len(self.states))
+        print("States:", self.states)
+        print("Alphabet:", self.alphabet)
+        print("Starting state:", self.initial_state)
+        print("Accepting states:", self.end_states)
+        print("Transition table:")
+        pprint.pprint(self.transition_table, indent=2)
+        print()
 
     def run(self, inp):
         states_queue = [self.initial_state]
