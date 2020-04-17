@@ -1,5 +1,5 @@
-from DFA.DFA import DFA
-from NFA import NFA
+from DFA.dfa import DFA
+from NFA import nfa
 
 
 def nfa_to_dfa(nfa):
@@ -134,9 +134,10 @@ def _e_closure(nfa):
         nfa.transition_table[state]['E*'] = e_closure
 
 
-with open('ex3.json', 'r') as f:
-    nfa = NFA.from_json(f.read())
+if __name__ == '__main__':
+    with open('ex3.json', 'r') as f:
+        nfa = nfa.from_json(f.read())
 
-dfa = nfa_to_dfa_with_e(nfa)
+    dfa = nfa_to_dfa_with_e(nfa)
 
-dfa.pretty_print()
+    dfa.pretty_print()

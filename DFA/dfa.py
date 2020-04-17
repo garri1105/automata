@@ -104,13 +104,14 @@ class DFA:
     def run(self, inp):
         current_state = self.initial_state
 
-        # print(f'\n-------------------\nStates: {self.states}')
-        # print(f'Initial State: {current_state}\n')
-
         for letter in inp:
             current_state = self.transition_table[current_state][letter]
-            # print(f'State after input {letter}: {current_state}')
 
-        # print(f'\nFinal State: {current_state}')
-        # print(f'End States: {self.end_states}')
         return current_state in self.end_states
+
+
+if __name__ == '__main__':
+    with open('basic_DFA.json', 'r') as f:
+        dfa = DFA.from_json(f.read())
+
+    print(f'Final State in End states: {dfa.run("0010111")}')

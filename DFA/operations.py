@@ -1,4 +1,4 @@
-from DFA import DFA
+from DFA import dfa
 
 
 def intersection(dfa1, dfa2):
@@ -24,7 +24,7 @@ def intersection(dfa1, dfa2):
         if s1 in dfa1.end_states and s2 in dfa2.end_states:
             end_states.append((s1, s2))
 
-    return DFA(states=states,
+    return dfa(states=states,
                alphabet=dfa1.alphabet,
                initial_state=initial_state,
                transition_table=transition_table,
@@ -54,7 +54,7 @@ def union(dfa1, dfa2):
         if s1 in dfa1.end_states or s2 in dfa2.end_states:
             end_states.append((s1, s2))
 
-    return DFA(states=states,
+    return dfa(states=states,
                alphabet=dfa1.alphabet,
                initial_state=initial_state,
                transition_table=transition_table,
@@ -67,7 +67,7 @@ def inverse(dfa):
         if state not in dfa.end_states:
             end_states.append(state)
 
-    return DFA(states=dfa.states,
+    return dfa(states=dfa.states,
                alphabet=dfa.alphabet,
                initial_state=dfa.initial_state,
                end_states=end_states,
@@ -75,10 +75,10 @@ def inverse(dfa):
 
 
 with open('dfa1.json', 'r') as f:
-    dfa1 = DFA.from_json(f.read())
+    dfa1 = dfa.from_json(f.read())
 
 with open('dfa2.json', 'r') as f:
-    dfa2 = DFA.from_json(f.read())
+    dfa2 = dfa.from_json(f.read())
 
 dfa3 = union(dfa1, dfa2)
 

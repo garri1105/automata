@@ -1,5 +1,5 @@
 import unittest
-from DFA.DFA import DFA
+from DFA.dfa import DFA
 
 
 class TestAutomataInitialization(unittest.TestCase):

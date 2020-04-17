@@ -1,5 +1,5 @@
 import unittest
-from NFA import NFA
+from NFA.nfa import NFA
 
 
 class TestAutomataExamples(unittest.TestCase):
