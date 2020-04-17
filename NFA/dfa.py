@@ -59,10 +59,10 @@ class DFA:
         if not initial_state:
             raise ValueError(f'initial_state can\'t be empty')
 
-        if initial_state not in self._states:
+        if tuple(initial_state) not in self._states:
             raise ValueError(f'initial_state \'{initial_state}\' is not in list of possible states')
 
-        self._initial_state = initial_state
+        self._initial_state = tuple(initial_state)
 
     @property
     def end_states(self):

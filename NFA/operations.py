@@ -1,5 +1,5 @@
-from DFA.dfa import DFA
-from NFA import nfa
+from NFA.dfa import DFA
+from NFA.nfa import NFA
 
 
 def nfa_to_dfa(nfa):
@@ -136,7 +136,7 @@ def _e_closure(nfa):
 
 if __name__ == '__main__':
     with open('ex3.json', 'r') as f:
-        nfa = nfa.from_json(f.read())
+        nfa = NFA.from_json(f.read())
 
     dfa = nfa_to_dfa_with_e(nfa)
 
